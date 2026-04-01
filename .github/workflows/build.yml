@@ -2,8 +2,8 @@ name: Build DB Sync Tools (.exe)
 
 on:
   push:
-    branches: [ main ] # หรือ master ตามชื่อ branch หลัก
-  manual_dispatch: # ทำให้กดรันมือได้เอง
+    branches: [ main ] # หาก branch หลักของคุณชื่อ master ให้เปลี่ยนตรงนี้เป็น master ครับ
+  workflow_dispatch: # แก้ไขเป็นคำสั่งนี้ เพื่อให้สามารถกดรันแบบ Manual ได้
 
 jobs:
   build:
