@@ -1,0 +1,35 @@
+name: Build DB Sync Tools (.exe)
+
+on:
+  push:
+    branches: [ main ] # หรือ master ตามชื่อ branch หลัก
+  manual_dispatch: # ทำให้กดรันมือได้เอง
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Build EXE with PyInstaller
+      run: |
+        # noconsole = ซ่อนหน้าต่าง CMD ดำๆ ตอนรัน, onefile = ยุบรวมเป็นไฟล์เดียว
+        pyinstaller --noconsole --onefile --name "DBSyncTools_V1.0" app.py
+
+    - name: Upload EXE Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: DB_Sync_Tools_Executable
+        path: dist/DBSyncTools_V1.0.exe
